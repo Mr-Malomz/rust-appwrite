@@ -1,8 +1,8 @@
 use dotenv::dotenv;
 use reqwest::{header, Client, Error};
-use std::{collections::HashMap, env};
+use std::env;
 
-use super::model::{JsonAPIBody, Project, ProjectResponse};
+use super::model::{JsonAPIBody, Project, ProjectRequest, ProjectResponse};
 
 pub struct AppwriteService {}
 
@@ -33,17 +33,15 @@ impl AppwriteService {
         headers.insert("X-Appwrite-Key", api_key.parse().unwrap());
         headers.insert("X-Appwrite-Project", project_id.parse().unwrap());
 
-        //create json body
-        let mut json_body: HashMap<String, String> = HashMap::new();
-        json_body.insert("name".to_string(), new_project.name);
-        json_body.insert("description".to_string(), new_project.description);
-
         let client = AppwriteService::init()
             .post(url)
             .headers(headers)
             .json(&JsonAPIBody {
                 documentId: "unique()".to_string(),
-                data: json_body,
+                data: ProjectRequest {
+                    name: new_project.name,
+                    description: new_project.description,
+                },
             })
             .send()
             .await;
@@ -107,17 +105,15 @@ impl AppwriteService {
         headers.insert("X-Appwrite-Key", api_key.parse().unwrap());
         headers.insert("X-Appwrite-Project", project_id.parse().unwrap());
 
-        //create json body
-        let mut json_body: HashMap<String, String> = HashMap::new();
-        json_body.insert("name".to_string(), updated_project.name);
-        json_body.insert("description".to_string(), updated_project.description);
-
         let client = AppwriteService::init()
             .patch(url)
             .headers(headers)
             .json(&JsonAPIBody {
                 documentId: "unique()".to_string(),
-                data: json_body,
+                data: ProjectRequest {
+                    name: updated_project.name,
+                    description: updated_project.description,
+                },
             })
             .send()
             .await;

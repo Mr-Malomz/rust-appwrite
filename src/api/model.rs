@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -27,7 +25,7 @@ pub struct ProjectResponse {
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct JsonAPIBody {
     pub documentId: String,
-    pub data: HashMap<String, String>,
+    pub data: ProjectRequest,
 }
 
 #[derive(Serialize, Debug, Clone)]
