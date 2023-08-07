@@ -1,8 +1,5 @@
 use super::{
-    model::{
-        APIErrorResponse, APIResponse, Project, ProjectRequest,
-        ProjectResponse,
-    },
+    model::{APIErrorResponse, APIResponse, Project, ProjectRequest, ProjectResponse},
     services::AppwriteService,
 };
 use actix_web::{
@@ -13,9 +10,8 @@ use actix_web::{
 use reqwest::StatusCode;
 
 #[post("/project")]
-pub async fn create_project(data: Json<Project>) -> HttpResponse {
-    let new_project = Project {
-        id: None,
+pub async fn create_project(data: Json<ProjectRequest>) -> HttpResponse {
+    let new_project = ProjectRequest {
         name: data.name.clone(),
         description: data.description.clone(),
     };
@@ -77,8 +73,7 @@ pub async fn update_project(
         });
     };
 
-    let data = Project {
-        id: None,
+    let data = ProjectRequest {
         name: updated_project.name.clone(),
         description: updated_project.description.clone(),
     };

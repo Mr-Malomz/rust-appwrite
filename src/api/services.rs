@@ -19,7 +19,7 @@ impl AppwriteService {
         Client::new()
     }
 
-    pub async fn create_project(new_project: Project) -> Result<ProjectResponse, Error> {
+    pub async fn create_project(new_project: ProjectRequest) -> Result<ProjectResponse, Error> {
         //get details from environment variable
         let project_id = AppwriteService::env_loader("PROJECT_ID");
         let database_id = AppwriteService::env_loader("DATABASE_ID");
@@ -38,10 +38,7 @@ impl AppwriteService {
             .headers(headers)
             .json(&JsonAPIBody {
                 documentId: "unique()".to_string(),
-                data: ProjectRequest {
-                    name: new_project.name,
-                    description: new_project.description,
-                },
+                data: new_project,
             })
             .send()
             .await;
@@ -89,7 +86,7 @@ impl AppwriteService {
     }
 
     pub async fn update_project(
-        updated_project: Project,
+        updated_project: ProjectRequest,
         document_id: String,
     ) -> Result<ProjectResponse, Error> {
         //get details from environment variable
@@ -110,10 +107,7 @@ impl AppwriteService {
             .headers(headers)
             .json(&JsonAPIBody {
                 documentId: "unique()".to_string(),
-                data: ProjectRequest {
-                    name: updated_project.name,
-                    description: updated_project.description,
-                },
+                data: updated_project,
             })
             .send()
             .await;
