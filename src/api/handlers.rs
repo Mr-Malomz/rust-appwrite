@@ -20,7 +20,7 @@ pub async fn create_project(data: Json<ProjectRequest>) -> HttpResponse {
 
     match project_details {
         Ok(data) => HttpResponse::Accepted().json(APIResponse::<ProjectResponse> {
-            status: StatusCode::ACCEPTED.as_u16(),
+            status: StatusCode::CREATED.as_u16(),
             message: "success".to_string(),
             data: Some(data),
         }),
@@ -47,7 +47,7 @@ pub async fn get_project(path: Path<String>) -> HttpResponse {
 
     match project_details {
         Ok(data) => HttpResponse::Accepted().json(APIResponse::<Project> {
-            status: StatusCode::ACCEPTED.as_u16(),
+            status: StatusCode::OK.as_u16(),
             message: "success".to_string(),
             data: Some(data),
         }),
@@ -82,7 +82,7 @@ pub async fn update_project(
 
     match project_details {
         Ok(data) => HttpResponse::Accepted().json(APIResponse::<ProjectResponse> {
-            status: StatusCode::ACCEPTED.as_u16(),
+            status: StatusCode::OK.as_u16(),
             message: "success".to_string(),
             data: Some(data),
         }),
