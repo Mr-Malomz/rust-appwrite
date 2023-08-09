@@ -24,7 +24,7 @@ pub struct ProjectResponse {
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct JsonAPIBody {
-    pub documentId: String,
+    pub documentId: Option<String>,
     pub data: ProjectRequest,
 }
 

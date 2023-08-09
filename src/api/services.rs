@@ -37,7 +37,7 @@ impl AppwriteService {
             .post(url)
             .headers(headers)
             .json(&JsonAPIBody {
-                documentId: "unique()".to_string(),
+                documentId: Some("unique()".to_string()),
                 data: new_project,
             })
             .send()
@@ -77,9 +77,9 @@ impl AppwriteService {
         match client {
             Ok(response) => {
                 let json = response.text().await?;
-                let created_project: Project = serde_json::from_str(json.as_str()).unwrap();
+                let project_detail: Project = serde_json::from_str(json.as_str()).unwrap();
 
-                Ok(created_project)
+                Ok(project_detail)
             }
             Err(error) => Err(error),
         }
@@ -106,7 +106,7 @@ impl AppwriteService {
             .patch(url)
             .headers(headers)
             .json(&JsonAPIBody {
-                documentId: "unique()".to_string(),
+                documentId: None,
                 data: updated_project,
             })
             .send()
