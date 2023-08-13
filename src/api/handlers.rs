@@ -10,7 +10,7 @@ use actix_web::{
 use reqwest::StatusCode;
 
 #[post("/project")]
-pub async fn create_project(data: Json<ProjectRequest>) -> HttpResponse {
+pub async fn create_project_handler(data: Json<ProjectRequest>) -> HttpResponse {
     let new_project = ProjectRequest {
         name: data.name.clone(),
         description: data.description.clone(),
@@ -33,7 +33,7 @@ pub async fn create_project(data: Json<ProjectRequest>) -> HttpResponse {
 }
 
 #[get("/project/{id}")]
-pub async fn get_project(path: Path<String>) -> HttpResponse {
+pub async fn get_project_handler(path: Path<String>) -> HttpResponse {
     let id = path.into_inner();
     if id.is_empty() {
         return HttpResponse::BadRequest().json(APIErrorResponse {
@@ -60,7 +60,7 @@ pub async fn get_project(path: Path<String>) -> HttpResponse {
 }
 
 #[patch("/project/{id}")]
-pub async fn update_project(
+pub async fn update_project_handler(
     updated_project: Json<ProjectRequest>,
     path: Path<String>,
 ) -> HttpResponse {
@@ -95,7 +95,7 @@ pub async fn update_project(
 }
 
 #[delete("/project/{id}")]
-pub async fn delete_project(path: Path<String>) -> HttpResponse {
+pub async fn delete_project_handler(path: Path<String>) -> HttpResponse {
     let id = path.into_inner();
     if id.is_empty() {
         return HttpResponse::BadRequest().json(APIErrorResponse {
